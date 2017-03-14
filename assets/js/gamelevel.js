@@ -25,11 +25,11 @@ var gameLevel = function(triviaQuestion, triviaChoices, correctAnswerIndex, imgC
 				return false
 			}
 		},
-
 		//return the list of choices for this trivia
 		getChoices: function() {
 			return priv.choices;
 		},
+		//return the image associated with correct answer of this trivia
 		getImgCard: function() {
 			return priv.imgCard;
 		}
