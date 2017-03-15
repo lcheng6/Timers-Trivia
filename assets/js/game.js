@@ -27,7 +27,7 @@ var allLevels = {
 		),
 	backToFuture: gameLevel(
 		"Which movie did Michael J Fox have an adventures with Doc?",
-		["Back to Future", "Teen Wolf", "The Frighteners", "The Secret of My Success"],
+		["Back to the Future", "Teen Wolf", "The Frighteners", "The Secret of My Success"],
 		0,
 		"assets/images/backToFuture.gif"
 		),
@@ -51,8 +51,12 @@ var correctAnswerText = "Correct!";
 var timeupText = "Time is up!";
 
 var guessInterval;
-var showAnswerInterval;
 var intervalCounter;
+
+var activeLevel;
+
+const showAnswerTimeout = 5000;
+const guessIntervalPeriod = 200;
 
 //Game state machine:
 //0: waiting for user to select a guess, with a inital counter of 30 
@@ -64,11 +68,48 @@ var gameState = 0;
 
 var waitForGuess = function() {
 
+	var timeRemainingString = "Time Remaining: " + (30-intervalCounter) + " Seconds"
+	$('#timeRemaining').text(timeRemainingString);
+
+	if(intervalCounter >= 30) {
+		//time exceeded, end the guess interval counter and go to choice
+		gameState = 2;
+		clearInterval(guessInterval);
+		$('#choices').hide();
+
+		$('#questionResult').text('Out of Time!');
+		$('#correctAnswer').text('The Correct Answer was : ' + activeLevel.getCorrectAnswer() + "!")
+		$('#imgCard img').attr('src', activeLevel.getImgCard());
+
+		$('#imgCard').show();
+
+		setTimeout(startNewLevel, showAnswerTimeout);
+
+
+	}else if (intervalCounter === 20) {
+		//exceeded 20 seconds, cross out and grey out another choice
+	}
+	else if (intervalCounter === 10)  {
+		//exceeded 10 seconds, cross out and grey out one choice
+
+	}else {
+		//time is within 0 to 10, do nothing
+	}
+	intervalCounter = intervalCounter + 1;
+
 }
-var startLevel = function() {
+var choiceClickFnc = function() {
+	//stop the guessInterval timer
+	clearInterval(guessInterval);
+
+	gameState = 1; 
+
+
+}
+var startNewLevel = function() {
 	$('#imgCard').hide();
 	var gameLevelIndex = Math.floor(Math.random()*allLevelNames.length);
-	var activeLevel = allLevels[allLevelNames[gameLevelIndex]];
+	activeLevel = allLevels[allLevelNames[gameLevelIndex]];
 
 	var triviaQuestion = activeLevel.getTriviaQuestion();
 	$('#questionResult').text(triviaQuestion);
@@ -84,6 +125,10 @@ var startLevel = function() {
 
 	indices = _.shuffle(indices);
 
+	//clear out all the choices that might have existed
+	$('#choices').empty();
+
+	//and fill choices with the 4 choices in this particular trivia
 	for (var i =0; i<indices.length;i++) {
 		var index = indices[i];
 		$('#choices').append(
@@ -91,6 +136,7 @@ var startLevel = function() {
 				.addClass('choice')
 				.attr('data-index', index)
 				.text(choices[index])
+				.click(choiceClickFnc)
 				);
 	}
 
@@ -98,8 +144,9 @@ var startLevel = function() {
 	$('#questionResult').show();
 	$('#choices').show();
 	gameState = 0;
+	intervalCounter = 0;
 
-	setInterval(waitForGuess, 1000);
+	guessInterval = setInterval(waitForGuess, guessIntervalPeriod);
 };
 
 $(document).ready(function() {
@@ -109,5 +156,5 @@ $(document).ready(function() {
 	$('#imgCard').hide();
 	$('#questionResult').hide();
 
-	startLevel();
+	startNewLevel();
 });

@@ -26,10 +26,16 @@ h1 {
 	text-align:center;
 }
 #questionResult {
-	font-size:23px;
+	font-size:26px;
 	margin:20px;
 	text-align:center;
 
+}
+
+#correctAnswer{
+	font-size:23px;
+	margin:20px;
+	text-align:center;
 }
 #choices {
 	font-size:30px;
@@ -42,6 +48,9 @@ h1 {
 	clear:both;
 	margin-left:250px;
 	margin-right:250px;
+}
+.cross-out {
+	text-decoration:line-through;
 }
 .choice:hover {
 	background-color:#F0F8FF;

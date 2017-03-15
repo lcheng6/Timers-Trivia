@@ -32,6 +32,9 @@ var gameLevel = function(triviaQuestion, triviaChoices, correctAnswerIndex, imgC
 		//return the image associated with correct answer of this trivia
 		getImgCard: function() {
 			return priv.imgCard;
+		},
+		getCorrectAnswer:function() {
+			return priv.choices[priv.correctAnswerIndex];
 		}
 	}
 }
