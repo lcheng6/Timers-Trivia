@@ -60,9 +60,10 @@ var guessInterval;
 var intervalCounter;
 
 var activeLevel;
+var activeLevelIndex;
 
 const showAnswerTimeout = 5000;
-const guessIntervalPeriod = 200;
+const guessIntervalPeriod = 1000;
 
 //Game state machine:
 //0: waiting for user to select a guess, with a inital counter of 30 
@@ -94,15 +95,31 @@ var waitForGuess = function() {
 
 	}else if (intervalCounter === 20) {
 		//exceeded 20 seconds, cross out and grey out another choice
+		//removeOneRandomChoice();
 	}
 	else if (intervalCounter === 10)  {
 		//exceeded 10 seconds, cross out and grey out one choice
+		//removeOneRandomChoice();
 
 	}else {
 		//time is within 0 to 10, do nothing
 	}
 	intervalCounter = intervalCounter + 1;
 
+}
+
+var removeOneRandomChoice = function() {
+	var len = $('#choices').children().length;
+	//only run this 3 times. 
+	for (var i= 0; i< 3; i++) {
+		var randomIndex = Math.floor(Math.random() * len);
+		var childDataIndex = $('#choices').children().eq(randomIndex).attr('data-index');
+		if (!activeLevel.isAnswerCorrect(childDataIndex)) {
+			$('#choices').children().eq(randomIndex).remove();
+
+			break;
+		}
+	}
 }
 var choiceClickFnc = function() {
 	//Display Correct! for correct guess, and the gif
@@ -139,8 +156,8 @@ var choiceClickFnc = function() {
 }
 var startNewLevel = function() {
 	$('#imgCard').hide();
-	var gameLevelIndex = Math.floor(Math.random()*allLevelNames.length);
-	activeLevel = allLevels[allLevelNames[gameLevelIndex]];
+
+	activeLevel = allLevels[allLevelNames[activeLevelIndex]];
 
 	var triviaQuestion = activeLevel.getTriviaQuestion();
 	$('#questionResult').text(triviaQuestion);
@@ -178,6 +195,8 @@ var startNewLevel = function() {
 	intervalCounter = 0;
 
 	guessInterval = setInterval(waitForGuess, guessIntervalPeriod);
+
+	activeLevelIndex = activeLevelIndex + 1;
 };
 
 $(document).ready(function() {
@@ -187,5 +206,6 @@ $(document).ready(function() {
 	$('#imgCard').hide();
 	$('#questionResult').hide();
 
+	activeLevelIndex = 0;
 	startNewLevel();
 });
