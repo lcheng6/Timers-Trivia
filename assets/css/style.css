@@ -36,6 +36,19 @@ h1 {
 	padding-bottom:50px;
 }
 
+.choice {
+	display:block;
+	clear:both;
+	margin-left:250px;
+	margin-right:250px;
+}
+.choice:hover {
+	background-color:#F0F8FF;
+	border-radius:3px;
+	border-width:3px;
+	border-color:blue;
+	border-style:solid;
+}
 #imgCard img{
 	margin:auto;
 	display:block;

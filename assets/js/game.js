@@ -50,3 +50,25 @@ var allLevelNames = ["goodWill", "potter", "abu", "sleepingBeauty", "backToFutur
 var correctAnswerText = "Correct!";
 var timeupText = "Time is up!"
 
+
+var guessInterval;
+var showAnswerInterval;
+var intervalCounter;
+
+//Game state machine:
+//0: waiting for user to select a guess, with a inital counter of 30 
+//   from this state, it enter state 1: user has selected a choice
+//   or state 2: time has run out, and user has not selected any choice
+//1: User has selected a choice. Show wehther the guess is right or wrong, show the answer gif and move back to state 0
+//2: User has not selected a choice when the guess interval ran out.  Show the answer gif, and go back to state 0
+var stateMachine = 0;
+
+$('#choices').hide();
+$('#imgCard').hide();
+var startLevel() {
+	var gameLevelIndex = Math.floor(Math.random()*allLevelNames.length);
+	$('#choices').show();
+}
+
+
+
