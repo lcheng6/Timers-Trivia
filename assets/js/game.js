@@ -119,7 +119,7 @@ var choiceClickFnc = function() {
 		//The answer was correct
 		//display Correct! 
 		$('#questionResult').text('Correct!');
-		$('correctAnswer').empty();
+		$('#correctAnswer').empty();
 	}else {
 		//The answer was incorrect. 
 		//display Nope!
