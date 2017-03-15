@@ -8,7 +8,7 @@ var allLevels = {
 		"assets/images/goodWill.gif"
 		),
 	potter: gameLevel(
-		"Which is NOT one of the four houses at Hogwarts School of Witchcraft and Wizardry",
+		"Which is NOT one of the four houses at Hogwarts School of Witchcraft and Wizardry?",
 		["Gryffindor", "Ravenholm", "Hufflepuff", "Slytherin"],
 		1,
 		"assets/images/potter.gif"
@@ -20,7 +20,7 @@ var allLevels = {
 		"assets/images/abu.gif"
 		),
 	sleepingBeauty: gameLevel(
-		"Which is NOT the name of the three fairies in the Disney classic \"Sleeping Beauty\"",
+		"Which is NOT the name of the three fairies in the Disney classic \"Sleeping Beauty\"?",
 		["Flora", "Fauna", "Merryweather", "Amelia"],
 		3,
 		"assets/images/sleepingBeauty.gif"
@@ -48,8 +48,7 @@ var allLevels = {
 var allLevelNames = ["goodWill", "potter", "abu", "sleepingBeauty", "backToFuture", "aliens", "topGun"];
 
 var correctAnswerText = "Correct!";
-var timeupText = "Time is up!"
-
+var timeupText = "Time is up!";
 
 var guessInterval;
 var showAnswerInterval;
@@ -61,14 +60,54 @@ var intervalCounter;
 //   or state 2: time has run out, and user has not selected any choice
 //1: User has selected a choice. Show wehther the guess is right or wrong, show the answer gif and move back to state 0
 //2: User has not selected a choice when the guess interval ran out.  Show the answer gif, and go back to state 0
-var stateMachine = 0;
+var gameState = 0;
 
-$('#choices').hide();
-$('#imgCard').hide();
-var startLevel() {
-	var gameLevelIndex = Math.floor(Math.random()*allLevelNames.length);
-	$('#choices').show();
+var waitForGuess = function() {
+
 }
+var startLevel = function() {
+	$('#imgCard').hide();
+	var gameLevelIndex = Math.floor(Math.random()*allLevelNames.length);
+	var activeLevel = allLevels[allLevelNames[gameLevelIndex]];
+
+	var triviaQuestion = activeLevel.getTriviaQuestion();
+	$('#questionResult').text(triviaQuestion);
+
+	var choices = activeLevel.getChoices();
+	//this helps generate a different shuffle choices, but choices are still tied to their 
+	//original index. 
+
+	var indices = [];
+	for (var i=0; i<choices.length; i++) {
+		indices.push(i);
+	}
+
+	indices = _.shuffle(indices);
+
+	for (var i =0; i<indices.length;i++) {
+		var index = indices[i];
+		$('#choices').append(
+			$('<div>')
+				.addClass('choice')
+				.attr('data-index', index)
+				.text(choices[index])
+				);
+	}
 
 
+	$('#questionResult').show();
+	$('#choices').show();
+	gameState = 0;
 
+	setInterval(waitForGuess, 1000);
+};
+
+$(document).ready(function() {
+	//initially just hide all relevant game interaction elements
+
+	$('#choices').hide();
+	$('#imgCard').hide();
+	$('#questionResult').hide();
+
+	startLevel();
+});

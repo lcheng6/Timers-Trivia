@@ -14,6 +14,7 @@ h1 {
 .container{
 	margin-top:30px;
 	background-color:yellow;
+	margin-bottom:30px;
 }
 
 #title {
@@ -24,14 +25,14 @@ h1 {
 	font-size:30px;
 	text-align:center;
 }
-#resultText {
-	font-size:30px;
+#questionResult {
+	font-size:23px;
 	margin:20px;
 	text-align:center;
 
 }
 #choices {
-	font-size:25px;
+	font-size:30px;
 	text-align:center;
 	padding-bottom:50px;
 }

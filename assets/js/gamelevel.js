@@ -14,7 +14,7 @@ var gameLevel = function(triviaQuestion, triviaChoices, correctAnswerIndex, imgC
 	return {
 		//return the Trivia's question
 		getTriviaQuestion: function() {
-			return priv.Question;
+			return priv.question;
 		},
 
 		//return true is guessed correct, otherwise not
