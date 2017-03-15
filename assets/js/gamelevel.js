@@ -19,7 +19,7 @@ var gameLevel = function(triviaQuestion, triviaChoices, correctAnswerIndex, imgC
 
 		//return true is guessed correct, otherwise not
 		isAnswerCorrect: function(index) {
-			if(priv.correct === index) {
+			if(priv.correctAnswerIndex === index) {
 				return true;
 			}else {
 				return false

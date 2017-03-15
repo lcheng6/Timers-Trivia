@@ -99,11 +99,36 @@ var waitForGuess = function() {
 
 }
 var choiceClickFnc = function() {
+	//Display Correct! for correct guess, and the gif
+
+	//Display Nope! for incorrect guess, the correct answer, and the gif
+
+
 	//stop the guessInterval timer
 	clearInterval(guessInterval);
 
 	gameState = 1; 
 
+	var clickedIndex = $(this).attr('data-index');
+	clickedIndex = parseInt(clickedIndex);
+
+	$('#choices').hide();
+
+	console.log('clicked Index: ' + clickedIndex);
+	if (activeLevel.isAnswerCorrect(clickedIndex)) {
+		//The answer was correct
+		//display Correct! 
+		$('#questionResult').text('Correct!');
+		$('correctAnswer').empty();
+	}else {
+		//The answer was incorrect. 
+		//display Nope!
+		$('#questionResult').text('Nope!');
+		$('#correctAnswer').text('The Correct Answer was : ' + activeLevel.getCorrectAnswer() + "!")
+	}
+	$('#imgCard img').attr('src', activeLevel.getImgCard());
+	setTimeout(startNewLevel, showAnswerTimeout);
+	$('#imgCard').show();
 
 }
 var startNewLevel = function() {
