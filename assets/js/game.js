@@ -42,6 +42,12 @@ var allLevels = {
 		["Ray Ban Aviator", "Oakley Night Shade", "Maui Jim Seal", "Swiss Inverter"],
 		0,
 		"assets/images/topGun.gif"
+		),
+	zackPhone: gameLevel(
+		"What is the model of Zack Morris's phone?",
+		["Motorola DynaTAC", "Motorola StarTAC", "Qualcomm QCP-860", "Motorola RAZR"],
+		0,
+		"assets/images/zackPhone.gif"
 		)
 };
 
