@@ -5,9 +5,41 @@ body {
 	background-size: cover;
 }
 h1 {
-	font-size:36px;
+	font-size:50px;
 	color:blue;
 	display:block;
-	margin:auto;
+	text-align:center;
 }
 
+.container{
+	margin-top:30px;
+	background-color:yellow;
+}
+
+#title {
+	margin-bottom:100px;
+}
+
+#timeRemaining {
+	font-size:30px;
+	text-align:center;
+}
+#resultText {
+	font-size:30px;
+	margin:20px;
+	text-align:center;
+
+}
+#choices {
+	font-size:25px;
+	text-align:center;
+	padding-bottom:50px;
+}
+
+#imgCard img{
+	margin:auto;
+	display:block;
+}
+#imgCard {
+	padding-bottom:50px;
+}
